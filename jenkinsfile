@@ -39,10 +39,6 @@ pipeline {
             steps {
                 echo 'Deploying locally...'
 
-                        // Stop any previous instance of the app (optional but recommended)
-                bat """
-                taskkill /F /IM java.exe || echo No previous instance running
-                     """
 
                         // Run the jar in the background
                 bat """
