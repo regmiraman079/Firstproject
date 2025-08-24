@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "\"%MAVEN_HOME%\\bin\\mvn\" clean package"
+                bat "mvn clean package"
             }
         }
 
