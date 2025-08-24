@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         MAVEN_HOME = tool name: 'Maven3', type: 'maven'
+        PATH = "${MAVEN_HOME}\\bin;${env.PATH}"
     }
 
     stages {
@@ -21,20 +22,21 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat "mvn clean package"
+                bat 'mvn -version'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn clean package'
+                bat 'mvn test'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying to localhost:8081/raman/regmi'
-                // Example: run your Spring Boot app on Windows
+                // Example for running Spring Boot app:
                 // bat "java -jar target\\your-app.jar"
             }
         }
