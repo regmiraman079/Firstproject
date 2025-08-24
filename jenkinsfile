@@ -37,10 +37,17 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying to localhost:8081/raman/regmi'
-                bat "start cmd /k java -jar ${JAR_FILE}"
-                // Example for running Spring Boot app:
-                // bat "java -jar target\\your-app.jar"
+                echo 'Deploying locally...'
+
+                        // Stop any previous instance of the app (optional but recommended)
+                bat """
+                taskkill /F /IM java.exe || echo No previous instance running
+                     """
+
+                        // Run the jar in the background
+                bat """
+                start /B java -jar target\\raman-0.0.1-SNAPSHOT.jar
+                     """
             }
         }
     }
