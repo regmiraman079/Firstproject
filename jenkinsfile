@@ -2,35 +2,42 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME = "Firstproject"
-        JAR_FILE = "target/${APP_NAME}-0.0.1-SNAPSHOT.jar"
+        MAVEN_HOME = tool name: 'Maven3', type: 'maven'
+        PATH = "${MAVEN_HOME}\\bin;${env.PATH}"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://your-git-repo-url.git'
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_TOKEN'
+                )]) {
+                    git url: "https://${GIT_USER}:${GIT_TOKEN}@github.com/regmiraman079/Firstproject.git",
+                        branch: 'develop'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                echo "Building the application..."
-                bat "mvn clean package"
+                bat 'mvn -version'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                echo "Running tests..."
-                bat "mvn test"
+                bat 'mvn test'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying locally on port 8080..."
-                bat "start cmd /k java -jar ${JAR_FILE}"
+                echo 'Deploying to localhost:8081/raman/regmi'
+                // Example for running Spring Boot app:
+                // bat "java -jar target\\your-app.jar"
             }
         }
     }
