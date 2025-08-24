@@ -1,37 +1,51 @@
 pipeline {
     agent any
 
+    environment {
+        MAVEN_HOME = tool name: 'Maven3', type: 'maven'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'develop',
-                    url: 'https://github.com/regmiraman079/Firstproject.git',
-                    credentialsId: 'github-credentials'
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-credentials',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_TOKEN'
+                )]) {
+                    git url: "https://${GIT_USER}:${GIT_TOKEN}@github.com/regmiraman079/Firstproject.git",
+                        branch: 'develop'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                bat "\"%MAVEN_HOME%\\bin\\mvn\" clean package"
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat "\"%MAVEN_HOME%\\bin\\mvn\" test"
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying to localhost:8081/raman/regmi'
-                // Add your deployment command here
+                // Example: run your Spring Boot app on Windows
+                // bat "java -jar target\\your-app.jar"
             }
         }
     }
+
     post {
+        success {
+            echo 'Build and deployment succeeded!'
+        }
         failure {
-            echo 'Build or Deployment failed!'
+            echo 'Build or deployment failed!'
         }
     }
 }
