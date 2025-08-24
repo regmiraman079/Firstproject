@@ -4,6 +4,8 @@ pipeline {
     environment {
         MAVEN_HOME = tool name: 'Maven3', type: 'maven'
         PATH = "${MAVEN_HOME}\\bin;${env.PATH}"
+        APP_NAME = "Firstproject"
+        JAR_FILE = "target/${APP_NAME}-0.0.1-SNAPSHOT.jar"
     }
 
     stages {
@@ -36,6 +38,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to localhost:8081/raman/regmi'
+                bat "start cmd /k java -jar ${JAR_FILE}"
                 // Example for running Spring Boot app:
                 // bat "java -jar target\\your-app.jar"
             }
