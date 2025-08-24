@@ -1,22 +1,18 @@
 pipeline {
     agent any
 
-    environment {
-        APP_NAME = "raman-regmi-app"
-        PORT = "8081"
-        JAR_FILE = "target/raman.jar"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'develop', url: 'https://github.com/your-username/your-repo.git'
+                git branch: 'develop',
+                    url: 'https://github.com/regmiraman079/Firstproject.git',
+                    credentialsId: 'github-credentials'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package'
             }
         }
 
@@ -28,30 +24,14 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                script {
-                    // Kill old process if running
-                    sh '''
-                        PID=$(lsof -t -i:${PORT})
-                        if [ ! -z "$PID" ]; then
-                            kill -9 $PID
-                        fi
-                    '''
-
-                    // Start new app on 8081
-                    sh '''
-                        nohup java -jar ${JAR_FILE} --server.port=${PORT} --server.servlet.context-path=/raman/regmi > app.log 2>&1 &
-                    '''
-                }
+                echo 'Deploying to localhost:8081/raman/regmi'
+                // Add your deployment command here
             }
         }
     }
-
     post {
-        success {
-            echo "Application deployed successfully at http://localhost:${PORT}/raman/regmi"
-        }
         failure {
-            echo "Build or Deployment failed!"
+            echo 'Build or Deployment failed!'
         }
     }
 }
