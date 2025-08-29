@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: spotify_Artist_ddl
+      author: raman
+      changes:
+        - sqlFile:
+            path: DDL/Artist.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: DDL/rollback/rollback_Artist.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: spotify_Genre_ddl
+      author: raman
+      changes:
+        - sqlFile:
+            path: DDL/Genre.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: DDL/rollback/rollback_genre.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: spotify_Images_ddl
+      author: raman
+      changes:
+        - sqlFile:
+            path: DDL/Image.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: DDL/rollback/rollback_Image.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: spotify_Searchmeta_ddl
+      author: raman
+      changes:
+        - sqlFile:
+            path: DDL/SearchMeta.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: DDL/rollback/rollback_searchmeta.sql
+            relativeToChangelogFile: true

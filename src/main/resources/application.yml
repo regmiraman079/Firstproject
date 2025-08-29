@@ -3,13 +3,13 @@ spring:
     name: raman
 
   liquibase:
-    enable: false
-    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yml
 
   datasource:
-    url: jdbc:postgresql://localhost:6160/mydatabase
-    username: myusername
-    password: mypassword
+    url: your local url
+    username: username
+    password: password
     driver-class-name: org.postgresql.Driver
 
 

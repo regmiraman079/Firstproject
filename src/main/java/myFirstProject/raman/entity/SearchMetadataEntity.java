@@ -12,9 +12,9 @@ public class SearchMetadataEntity {
     private Long id;
 
     private String href;
-    private int limit;
+    private int limit_value;
     private String next;
-    private int offset;
+    private int offset_value;
     private String previous;
     private int total;
 }

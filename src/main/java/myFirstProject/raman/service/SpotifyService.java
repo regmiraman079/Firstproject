@@ -39,9 +39,9 @@ public class SpotifyService {
         // Save metadata
         SearchMetadataEntity metadata = new SearchMetadataEntity();
         metadata.setHref(response.getArtists().getHref());
-        metadata.setLimit(response.getArtists().getLimit());
+        metadata.setLimit_value(response.getArtists().getLimit_value());
         metadata.setNext(response.getArtists().getNext());
-        metadata.setOffset(response.getArtists().getOffset());
+        metadata.setOffset_value(response.getArtists().getOffset_value());
         metadata.setPrevious(response.getArtists().getPrevious());
         metadata.setTotal(response.getArtists().getTotal());
         metadataRepository.save(metadata);
