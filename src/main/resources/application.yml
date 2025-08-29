@@ -2,10 +2,23 @@ spring:
   application:
     name: raman
 
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yml
+
+  datasource:
+    url: your local url
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+
 spotify:
   client:
     clientId: 27d1c4fc4da2455b83152d028458850a
     clientSecret: 5e4e5488585c4ef29464a58c7550a385
+
+
 
 
 

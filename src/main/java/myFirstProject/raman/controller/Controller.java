@@ -1,5 +1,7 @@
 package myFirstProject.raman.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import myFirstProject.raman.DTO.SpotifyResponse;
 import myFirstProject.raman.service.Addition;
 import myFirstProject.raman.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,20 @@ public class Controller {
     SpotifyService spotifyService;
 
 
-    @PostMapping("/spotify2")
-    public int searchArtist() {
-        return addition.add(5, 10);
-    }
-
     @PostMapping("/artist")
-    public Map<String, Object> getArtist(@RequestBody Map<String, String> request) {
+    public Map<String, Object> searchAndSaveArtist(@RequestBody Map<String, String> request) {
         String name = request.get("name");
+
+        // Search artist
+        Map<String, Object> artistData = spotifyService.searchArtistByName(name);
+
+        // Convert Map to SpotifyResponse
+        ObjectMapper mapper = new ObjectMapper();
+        SpotifyResponse response = mapper.convertValue(artistData, SpotifyResponse.class);
+
+        // Save the data
+        spotifyService.saveSpotifyData(response);
+
         return spotifyService.searchArtistByName(name);
     }
 }
