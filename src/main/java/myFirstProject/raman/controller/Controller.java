@@ -2,7 +2,6 @@ package myFirstProject.raman.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myFirstProject.raman.DTO.SpotifyResponse;
-import myFirstProject.raman.service.Addition;
 import myFirstProject.raman.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +14,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/spotify")
 public class Controller {
-    @Autowired
-    Addition addition;
 
     @Autowired
     SpotifyService spotifyService;
