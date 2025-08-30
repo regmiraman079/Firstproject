@@ -2,6 +2,7 @@ package myFirstProject.raman.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myFirstProject.raman.DTO.SpotifyResponse;
+import myFirstProject.raman.dao.dataInterpolater;
 import myFirstProject.raman.service.SpotifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/spotify")
 public class Controller {
+
+    @Autowired
+    dataInterpolater data;
 
     @Autowired
     SpotifyService spotifyService;
@@ -31,7 +35,7 @@ public class Controller {
         SpotifyResponse response = mapper.convertValue(artistData, SpotifyResponse.class);
 
         // Save the data
-        spotifyService.saveSpotifyData(response);
+        data.saveSpotifyData(response);
 
         return spotifyService.searchArtistByName(name);
     }
