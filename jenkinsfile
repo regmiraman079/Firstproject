@@ -52,12 +52,7 @@ pipeline {
              steps {
                     echo 'Running Docker container locally...'
                     bat """
-                    docker ps -q --filter "name=${APP_NAME}" > tmp.txt
-                    for /F %%i in (tmp.txt) do (
-                        docker stop %%i
-                        docker rm %%i
-                    )
-                    del tmp.txt
+                    docker rm -f ${APP_NAME} || echo "No container to remove"
                     docker run -d -p ${HOST_PORT}:${CONTAINER_PORT} --name ${APP_NAME} ${DOCKER_IMAGE}
                     """
                 }
