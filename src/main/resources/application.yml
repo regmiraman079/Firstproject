@@ -7,10 +7,15 @@ spring:
     change-log: classpath:db/changelog/changelog-master.yml
 
   datasource:
-    url: your local url
-    username: username
-    password: password
+    url: jdbc:postgresql://localhost:6160/Spotify
+    username: postgres
+    password: Raman@123
     driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 30000
+
 
 
 spotify:
