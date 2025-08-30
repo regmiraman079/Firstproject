@@ -45,17 +45,18 @@ pipeline {
         }
 
         stage('Run Docker Container') {
-            steps {
-                echo 'Running Docker container locally...'
-                // Stop existing container if it exists
-                bat """
-                docker ps -q --filter "name=${APP_NAME}" > tmp.txt
-                for /f %%i in (tmp.txt) do docker stop %%i
-                docker rm %%i
-                """
-                // Run new container
-                bat "docker run -d -p ${HOST_PORT}:${CONTAINER_PORT} --name ${APP_NAME} ${DOCKER_IMAGE}"
-            }
+             steps {
+                    echo 'Running Docker container locally...'
+                    bat """
+                    docker ps -q --filter "name=${APP_NAME}" > tmp.txt
+                    for /F %%i in (tmp.txt) do (
+                        docker stop %%i
+                        docker rm %%i
+                    )
+                    del tmp.txt
+                    docker run -d -p ${HOST_PORT}:${CONTAINER_PORT} --name ${APP_NAME} ${DOCKER_IMAGE}
+                    """
+                }
         }
     }
 
